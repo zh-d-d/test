@@ -1,11 +1,10 @@
-name: Publish Tauri App
+name: Tauri Build
 
 on:
   push:
     branches:
       - main
 
-# 👇 官方必须加的权限
 permissions:
   contents: write
 
@@ -23,15 +22,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # 👇 Tauri 官方 Action（自动构建 + 上传）
-      - name: Build and release
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: --config src-tauri/tauri.conf.json build
