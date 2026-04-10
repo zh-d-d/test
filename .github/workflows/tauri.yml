@@ -1,4 +1,4 @@
-name: Tauri Build
+name: Build & Release
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -30,7 +30,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Tauri app
+      - name: Build app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__
+          releaseName: "App v__VERSION__"
+          releaseDraft: false
+          prerelease: false
