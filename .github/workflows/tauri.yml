@@ -39,3 +39,4 @@ jobs:
           releaseName: "App v__VERSION__"
           releaseDraft: false
           prerelease: false
+          uploadPlainBinary: true
